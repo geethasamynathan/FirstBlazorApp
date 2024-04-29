@@ -1,0 +1,30 @@
+﻿@page "/lifecycle"
+@inherits ComponentBase
+<h3>LifeCycleComponent</h3>
+
+@code {
+    protected override void OnInitialized()
+    {
+        Console.WriteLine("Component Initialized");
+    }
+
+    protected override void OnParametersSet()
+    {
+        Console.WriteLine("Component parameters set");
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        // Perform logic after the component has been rendered
+        if (firstRender)
+        {
+            // Fetch data from an API or perform other async tasks
+            Console.WriteLine("First render complete");
+
+            // Simulating async operation
+            await Task.Delay(1000);
+
+            Console.WriteLine("Async operation complete");
+        }
+    }
+
+}

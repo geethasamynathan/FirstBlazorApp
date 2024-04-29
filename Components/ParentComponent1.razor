@@ -1,0 +1,55 @@
+﻿@page "/parent1"
+<h3>Parent Component</h3>
+
+<button @onclick="IncrementCounter">Increment Counter</button>
+
+@if (showChild)
+{
+    <ChildComponent CounterValue="@counterValue" />
+}
+
+@code {
+    private int counterValue;
+    private bool showChild = true;
+    private Timer timer;
+
+    public ParentComponent1()
+    {
+        
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Initialization logic
+        Console.WriteLine("ParentComponent Initialized");
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        // Parameter set logic
+        Console.WriteLine("ParentComponent Parameters Set");
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        // After render logic
+        Console.WriteLine("ParentComponent After Render");
+    }
+
+    ~ParentComponent1()
+    {
+        // Dispose logic
+        Console.WriteLine("ParentComponent Disposed");
+    }
+
+    private void IncrementCounter()
+    {
+        counterValue++;
+        StateHasChanged(); // Notify Blazor to re-render the component
+    }
+
+    private void CloseChild()
+    {
+        showChild = false;
+    }
+}

@@ -1,0 +1,70 @@
+﻿@page "/userlist"
+@using System.Text.Json
+@using FirstBlazorApp.Data
+
+@* @inherits ComponentBase *@
+<h3>User List</h3>
+
+@if (Users != null)
+{
+    <ul>
+        @foreach (var user in Users)
+        {
+            <li>@user.username - @user.email</li>
+        }
+    </ul>
+}
+else if (!string.IsNullOrEmpty(errorMessage))
+{
+    <p>Error: @errorMessage</p>
+}
+else
+{
+    <p>Loading...</p>
+}
+@code {
+    private List<User> Users;
+    private string errorMessage;
+
+   
+
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine(" OnInitializeAysnc Called");
+        await FetchUserData();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Console.WriteLine(" OnParametersSetAsync Called");
+        await FetchUserData();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            // Do something after the component has been rendered for the first time
+            Console.WriteLine("Component rendered for the first time");
+        }
+    }
+
+    private async Task FetchUserData()
+    {
+        try
+        {
+            // Fetch user data from JSONPlaceholder API
+            using (var httpClient = new HttpClient())
+            {
+                var response = await httpClient.GetAsync("https://jsonplaceholder.typicode.com/users");
+                response.EnsureSuccessStatusCode(); // Throw exception if not successful
+                var json = await response.Content.ReadAsStringAsync();
+                Users = JsonSerializer.Deserialize<List<User>>(json);
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = ex.Message;
+        }
+    }
+}

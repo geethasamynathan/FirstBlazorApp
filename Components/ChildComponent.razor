@@ -1,0 +1,39 @@
+﻿<h4>Child Component</h4>
+
+<p>Counter Value: @CounterValue</p>
+
+@code {
+    [Parameter]
+    public int CounterValue { get; set; }
+    public ChildComponent()
+    {
+
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        // Initialization logic
+        Console.WriteLine("ChildComponent Initialized");
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        // Parameter set logic
+        Console.WriteLine("ChildComponent Parameters Set");
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        // After render logic
+        Console.WriteLine("ChildComponent After Render");
+    }
+    ~ChildComponent()
+    {
+        Console.WriteLine("ChildComponent Disposed");
+    }
+    // protected override async Task DisposeAsync()
+    // {
+      
+    //            // Dispose logic
+    //     Console.WriteLine("ChildComponent Disposed");
+    // }
+}
